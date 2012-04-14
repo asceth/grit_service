@@ -13,13 +13,14 @@ module Grit
     end
 
     def self.service_methods
-      @service_methods ||= []
+      @service_methods || []
     end
 
     def self.service(method)
-      service_methods += [method]
+      @service_methods ||= []
+      @service_methods += [method]
       define_method(method) do |*args|
-        bertrpc.call.send(:method, *([self.git_dir, args].flatten))
+        bertrpc.call.git.send(:method, *([self.git_dir, args].flatten))
       end
     end
 

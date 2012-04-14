@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'grit'
   s.add_dependency 'bert'
   s.add_dependency 'bertrpc'
-  s.add_dependency 'ernie'
+
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rr'
