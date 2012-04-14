@@ -1,3 +1,3 @@
 class GritService
-  VERSION = "1.0.0"
+  VERSION = "2.4.1"
 end

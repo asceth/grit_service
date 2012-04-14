@@ -2,7 +2,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "grit_service/version"
 
 Gem::Specification.new do |s|
-  s.name        = "grit-service"
+  s.name        = "grit_service"
   s.version     = GritService::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["John 'asceth' Long"]
