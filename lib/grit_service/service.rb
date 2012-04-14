@@ -1,3 +1,5 @@
+require 'rubygems'
+gem 'ernie'
 require 'ernie'
 
 mod(:grit) do
