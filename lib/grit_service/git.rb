@@ -20,7 +20,7 @@ module Grit
       @service_methods ||= []
       @service_methods += [method]
       define_method(method) do |*args|
-        bertrpc.call.git.send(:method, *([self.git_dir, args].flatten))
+        bertrpc.call.git.send(method, *([self.git_dir, args].flatten))
       end
     end
 
@@ -49,7 +49,7 @@ module Grit
     service :apply_patch
 
     def native(cmd, options = {}, *args, &block)
-      bert.call.send(cmd, options, *args)
+      bertrpc.call.git.send(cmd, options, *args)
     end
   end # Git
 end # Grit
