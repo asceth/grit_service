@@ -7,9 +7,9 @@ File.open('/tmp/grit_service', 'w+') do |f|
   original = File.read("#{GRIT_SERVICE_ROOT}/lib/grit_service/config.erl")
 
   with_paths = original.
-    gsub('GIT_SERVICE_GIT_PATH',
+    gsub('GRIT_SERVICE_GIT_PATH',
          "#{GRIT_SERVICE_ROOT}/lib/grit_service/service/git.rb").
-    gsub('GIT_SERVICE_REPO_PATH',
+    gsub('GRIT_SERVICE_REPO_PATH',
          "#{GRIT_SERVICE_ROOT}/lib/grit_service/service/repo.rb")
 
 
