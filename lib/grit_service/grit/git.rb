@@ -26,8 +26,29 @@ module Grit
     service :get_patch
     service :apply_patch
 
+    # we need to undef all of the GitRuby methods so native sends them on
+    undef :init
+    undef :cat_file
+    undef :cat_ref
+    undef :ls_tree
+    undef :diff
+    undef :rev_list
+    undef :rev_parse
+    undef :refs
+    undef :tags
+    undef :file_size
+    undef :file_type
+    undef :blame_tree
+
+    # override native to send rpc
     def native(cmd, options = {}, *args, &block)
       GritService.bertrpc.call.git.native(self.git_dir, cmd, options, *args)
+    end
+
+    # not sure why I need to do this but doing it on console
+    # commands returned correct results...
+    def method_missing(cmd, options = {}, *args, &block)
+      native(cmd, options, *args)
     end
   end # Git
 end # Grit

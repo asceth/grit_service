@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'ernie'
 require 'grit'
+require 'grit_service/base'
 
 module GritService
   module Service
@@ -27,7 +28,14 @@ module GritService
       service :get_patch
       service :apply_patch
 
-      service :native
+      def native(git_dir, cmd, *args)
+        GritService.log.debug("#{GritService.git(git_dir)}: #{cmd}(#{args.inspect})")
+        GritService.git(git_dir).send(cmd, *args)
+      rescue Exception => e
+        GritService.log.error(e.to_s)
+        e.backtrace.each {|line| GritService.log.error(line)}
+        raise e
+      end
     end
   end
 end

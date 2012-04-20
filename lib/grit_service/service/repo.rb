@@ -1,13 +1,14 @@
 require 'rubygems'
 require 'ernie'
 require 'grit'
+require 'grit_service/base'
 
 module GritService
   module Service
     module Repo
       extend GritService::Helpers
 
-      def initialize_path(path, options)
+      def initialize_repo(path, options)
         repo_options = {}
         epath = File.expand_path(path)
 
@@ -30,4 +31,4 @@ module GritService
   end
 end
 
-Ernie.expose(:git, GritService::Service::Repo)
+Ernie.expose(:repo, GritService::Service::Repo)
