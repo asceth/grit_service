@@ -4,7 +4,16 @@ $:.unshift(File.join(File.dirname(__FILE__), *%w[.. lib]))
 GRIT_SERVICE_ROOT = File.join(File.expand_path(File.dirname(__FILE__)), *%w[..])
 
 File.open('/tmp/grit_service', 'w+') do |f|
-  f.write(File.read("#{GRIT_SERVICE_ROOT}/lib/grit_service/config.erl").gsub('PATH', "#{GRIT_SERVICE_ROOT}/lib/grit_service/service.rb"))
+  original = File.read("#{GRIT_SERVICE_ROOT}/lib/grit_service/config.erl")
+
+  with_paths = original.
+    gsub('GIT_SERVICE_GIT_PATH',
+         "#{GRIT_SERVICE_ROOT}/lib/grit_service/service/git.rb").
+    gsub('GIT_SERVICE_REPO_PATH',
+         "#{GRIT_SERVICE_ROOT}/lib/grit_service/service/repo.rb")
+
+
+  f.write(with_paths)
 end
 
 exec("ernie #{ARGV[0..-1].join(' ')} -c /tmp/grit_service")

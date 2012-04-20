@@ -1,31 +1,9 @@
-require 'grit'
-require 'bertrpc'
-
 module Grit
   class Git
-    def self.bertrpc(host = 'localhost', port = 9999)
-      @bertrpc ||= BERTRPC::Service.new(host, port)
-    end
-
-    def self.repo(git_dir)
-      @repos ||= {}
-      @repos[git_dir] ||= Grit::Git.new(git_dir)
-    end
-
-    def self.service_methods
-      @service_methods || []
-    end
-
     def self.service(method)
-      @service_methods ||= []
-      @service_methods += [method]
       define_method(method) do |*args|
-        bertrpc.call.git.send(method, *([self.git_dir, args].flatten))
+        GritService.bertrpc.call.git.send(method, *([self.git_dir, args].flatten))
       end
-    end
-
-    def bertrpc
-      self.class.bertrpc
     end
 
     service :exist?
@@ -49,7 +27,7 @@ module Grit
     service :apply_patch
 
     def native(cmd, options = {}, *args, &block)
-      bertrpc.call.git.send(cmd, options, *args)
+      GritService.bertrpc.call.git.native(self.git_dir, cmd, options, *args)
     end
   end # Git
 end # Grit
