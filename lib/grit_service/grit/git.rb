@@ -38,7 +38,6 @@ module Grit
     undef :tags
     undef :file_size
     undef :file_type
-    undef :blame_tree
 
     # override native to send rpc
     def native(cmd, options = {}, *args, &block)
